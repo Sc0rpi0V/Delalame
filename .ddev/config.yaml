@@ -1,0 +1,27 @@
+name: artisan
+type: symfony
+docroot: public
+php_version: "8.2"
+webserver_type: nginx-fpm
+database:
+  type: mysql
+  version: "8.0"
+nodejs_version: "20"
+composer_version: "2"
+timezone: Europe/Paris
+performance_mode: "none"
+xdebug_enabled: false
+
+# Ports routeur décalés (= ancien localhost:8080) : coexiste avec hygiestore
+# (routeur 80/443) et lasante (apache en direct sur 80/443).
+router_http_port: "8080"
+router_https_port: "8443"
+
+# Remplacent les services Docker `messenger-worker` et `node` (supervisord, redémarrage auto).
+web_extra_daemons:
+  - name: messenger
+    command: "php bin/console messenger:consume async --time-limit=3600 --memory-limit=128M -vv"
+    directory: /var/www/html
+  - name: encore
+    command: "bash -c 'test -d node_modules || npm install; npm run watch'"
+    directory: /var/www/html

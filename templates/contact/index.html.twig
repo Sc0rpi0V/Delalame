@@ -1,0 +1,89 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contact — {{ site_name }}{% endblock %}
+{% block meta_description %}Contactez notre atelier de menuiserie. Réponse garantie sous 48 h.{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% if site_settings.contact_lat ?? null and site_settings.contact_lng ?? null %}
+        {{ encore_entry_link_tags('map') }}
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+
+<div class="bg-stone-light py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h1 class="section-title mb-2">Nous contacter</h1>
+        <p class="section-subtitle">Une question ? Appelez-nous ou écrivez-nous, nous vous répondons sous 48 h ouvrées.</p>
+    </div>
+</div>
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+
+        <div class="lg:col-span-2 space-y-6">
+            <div class="card p-8">
+                <h2 class="font-serif text-2xl font-semibold text-charcoal mb-3">Une demande de devis ?</h2>
+                <p class="text-muted font-sans leading-relaxed mb-6">
+                    Choisissez le service qui correspond à votre projet : un mail pré-rempli s'ouvre dans votre messagerie,
+                    il ne vous reste qu'à le compléter avec vos informations (dimensions, adresse du chantier, délais…).
+                </p>
+                <a href="{{ path('app_services') }}" class="btn-primary">Voir nos services</a>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <a href="tel:{{ site_settings.contact_phone_raw ?? '' }}" class="card p-6 hover:shadow-craft transition-shadow">
+                    <h2 class="font-serif font-semibold text-charcoal mb-2">Par téléphone</h2>
+                    <p class="text-wood font-sans text-lg">{{ site_settings.contact_phone ?? '' }}</p>
+                </a>
+                <a href="mailto:{{ site_settings.contact_email ?? '' }}" class="card p-6 hover:shadow-craft transition-shadow">
+                    <h2 class="font-serif font-semibold text-charcoal mb-2">Par email</h2>
+                    <p class="text-wood font-sans text-lg break-all">{{ site_settings.contact_email ?? '' }}</p>
+                </a>
+            </div>
+        </div>
+
+        {# Sidebar info #}
+        <aside class="space-y-6">
+            <div class="card p-6">
+                <h2 class="font-serif font-semibold text-charcoal mb-4">Atelier</h2>
+                <address class="not-italic text-sm text-muted space-y-2 font-sans">
+                    <p>{{ (site_settings.contact_address ?? '')|nl2br }}</p>
+                    <p><a href="tel:{{ site_settings.contact_phone_raw ?? '' }}" class="hover:text-wood transition-colors">{{ site_settings.contact_phone ?? '' }}</a></p>
+                    <p><a href="mailto:{{ site_settings.contact_email ?? '' }}" class="hover:text-wood transition-colors">{{ site_settings.contact_email ?? '' }}</a></p>
+                </address>
+                {% if site_settings.contact_lat ?? null and site_settings.contact_lng ?? null %}
+                <div
+                    id="contact-map"
+                    data-lat="{{ site_settings.contact_lat }}"
+                    data-lng="{{ site_settings.contact_lng }}"
+                    data-label="{{ site_name }}"
+                    class="mt-4 rounded-craft overflow-hidden"
+                    style="height: 220px;"
+                    role="img"
+                    aria-label="Carte de localisation de l'atelier"
+                ></div>
+                {% endif %}
+            </div>
+            <div class="card p-6">
+                <h2 class="font-serif font-semibold text-charcoal mb-4">Horaires</h2>
+                <dl class="text-sm text-muted font-sans space-y-1">
+                    <div class="flex justify-between"><dt>{{ site_settings.hours_weekdays_label ?? '' }}</dt><dd>{{ site_settings.hours_weekdays_value ?? '' }}</dd></div>
+                    <div class="flex justify-between"><dt>{{ site_settings.hours_saturday_label ?? '' }}</dt><dd>{{ site_settings.hours_saturday_value ?? '' }}</dd></div>
+                    <div class="flex justify-between"><dt>{{ site_settings.hours_sunday_label ?? '' }}</dt><dd>{{ site_settings.hours_sunday_value ?? '' }}</dd></div>
+                </dl>
+            </div>
+        </aside>
+
+    </div>
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% if site_settings.contact_lat ?? null and site_settings.contact_lng ?? null %}
+        {{ encore_entry_script_tags('map') }}
+    {% endif %}
+{% endblock %}

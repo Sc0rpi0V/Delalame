@@ -1,0 +1,163 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ site_name }} — Pose et installation de menuiseries{% endblock %}
+{% block meta_description %}Artisan menuisier spécialisé dans la fourniture et pose de fenêtres, portes, volets et portes de garage — PVC, aluminium, bois. Devis gratuit sous 48 h.{% endblock %}
+
+{% block body %}
+
+{# ─── Hero ─── #}
+<section class="relative bg-charcoal text-warm-white overflow-hidden min-h-[80vh] flex items-center">
+    <div class="absolute inset-0 bg-gradient-to-br from-charcoal/90 via-charcoal/75 to-slate-green/40 z-10"></div>
+    <div class="absolute inset-0 bg-cover bg-center opacity-25" style="background-color: #3d2b1f;"></div>
+    <div class="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+        <div class="max-w-2xl">
+            <span class="badge-wood text-sm mb-4 inline-block">Installateur certifié — devis gratuit sous 48 h</span>
+            <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6 text-balance">
+                Fenêtres, portes,<br>
+                <span class="text-amber-craft">volets & garages</span>
+            </h1>
+            <p class="text-warm-white/80 text-lg font-sans leading-relaxed mb-8 max-w-xl">
+                {{ site_settings.home_hero_desc ?? 'Fourniture et pose de menuiseries pour particuliers et professionnels.' }}
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 items-center sm:items-start">
+                <a href="{{ path('app_services') }}" class="btn-accent text-base px-8 py-4 w-full sm:w-auto text-center">
+                    Demander un devis gratuit
+                </a>
+                <a href="{{ path('app_gallery') }}" class="btn-secondary border-warm-white/40 text-warm-white hover:bg-warm-white hover:text-charcoal text-base px-8 py-4 w-full sm:w-auto text-center">
+                    Voir nos réalisations
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+{# ─── Services preview ─── #}
+<section class="py-20 bg-warm-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="section-title mb-3">{{ site_settings.home_services_title ?? 'Nos domaines d\'intervention' }}</h2>
+            <p class="section-subtitle">{{ site_settings.home_services_subtitle ?? 'Installation, remplacement et rénovation — tous matériaux' }}</p>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {% for i in 1..4 %}
+            {% set icon = attribute(site_settings, 'home_service_' ~ i ~ '_icon') ?? '' %}
+            {% set name = attribute(site_settings, 'home_service_' ~ i ~ '_name') ?? '' %}
+            {% set desc = attribute(site_settings, 'home_service_' ~ i ~ '_desc') ?? '' %}
+            {% if name %}
+            <a href="{{ path('app_services') }}" class="card p-6 group cursor-pointer">
+                <div class="text-4xl mb-4">{{ icon }}</div>
+                <h3 class="font-serif font-semibold text-charcoal text-lg mb-2 group-hover:text-wood transition-colors">{{ name }}</h3>
+                <p class="text-sm text-muted leading-relaxed">{{ desc }}</p>
+            </a>
+            {% endif %}
+            {% endfor %}
+        </div>
+        <div class="text-center mt-8">
+            <a href="{{ path('app_services') }}" class="btn-secondary">Découvrir tous nos services</a>
+        </div>
+    </div>
+</section>
+
+{# ─── Atouts ─── #}
+<section class="bg-stone-light py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {% for i in 1..3 %}
+            {% set icon  = attribute(site_settings, 'home_atout_' ~ i ~ '_icon')  ?? '' %}
+            {% set title = attribute(site_settings, 'home_atout_' ~ i ~ '_title') ?? '' %}
+            {% set desc  = attribute(site_settings, 'home_atout_' ~ i ~ '_desc')  ?? '' %}
+            {% if title %}
+            <div class="flex gap-4">
+                <div class="text-3xl shrink-0">{{ icon }}</div>
+                <div>
+                    <h3 class="font-serif font-semibold text-charcoal mb-1">{{ title }}</h3>
+                    <p class="text-sm text-muted font-sans leading-relaxed">{{ desc }}</p>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{# ─── Stats ─── #}
+<section class="bg-wood py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center text-warm-white">
+            {% for i in 1..4 %}
+            {% set value = attribute(site_settings, 'home_stat_' ~ i ~ '_value') ?? '' %}
+            {% set label = attribute(site_settings, 'home_stat_' ~ i ~ '_label') ?? '' %}
+            {% if value %}
+            <div>
+                <div class="font-serif text-4xl font-bold text-amber-craft mb-1">{{ value }}</div>
+                <div class="text-sm font-sans text-warm-white/80">{{ label }}</div>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{# ─── Gallery preview ─── #}
+{% if preview_images|length > 0 %}
+<section class="py-20 bg-stone-light">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="section-title mb-3">Quelques réalisations</h2>
+            <p class="section-subtitle">Des chantiers variés, du pavillon à l'immeuble</p>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {% for image in preview_images %}
+            <a href="{{ path('app_gallery') }}" class="card group overflow-hidden aspect-video">
+                <img
+                    src="{{ vich_uploader_asset(image, 'imageFile') | imagine_filter('gallery_preview') }}"
+                    alt="{{ image.altText ?: image.title }}"
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
+                >
+            </a>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-8">
+            <a href="{{ path('app_gallery') }}" class="btn-primary">Voir toutes les réalisations</a>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+{# ─── Matériaux ─── #}
+<section class="py-20 bg-warm-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-10">
+            <h2 class="section-title mb-3">Tous matériaux</h2>
+            <p class="section-subtitle">Nous sélectionnons le matériau adapté à votre projet et votre budget</p>
+        </div>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 text-center">
+            {% for mat in [
+                {name: 'PVC', desc: "Économique, isolant, facile d'entretien"},
+                {name: 'Aluminium', desc: 'Design, durable, grandes dimensions'},
+                {name: 'Bois', desc: 'Chaleureux, naturel, sur mesure'},
+                {name: 'Mixte', desc: "Bois intérieur + alu extérieur"},
+            ] %}
+            <div class="bg-stone-light rounded-craft p-5">
+                <div class="font-serif text-xl font-bold text-wood mb-1">{{ mat.name }}</div>
+                <p class="text-xs text-muted font-sans">{{ mat.desc }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{# ─── CTA final ─── #}
+<section class="bg-charcoal py-16">
+    <div class="max-w-3xl mx-auto px-4 text-center text-warm-white">
+        <h2 class="font-serif text-3xl font-bold mb-4">Un projet de remplacement ou d'installation ?</h2>
+        <p class="text-warm-white/70 font-sans mb-8">Choisissez votre service et envoyez-nous votre demande par email — devis détaillé sous 48 h, sans engagement.</p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="{{ path('app_services') }}" class="btn-accent text-base px-8 py-4">Demander un devis gratuit</a>
+            <a href="{{ path('app_contact') }}" class="btn-secondary border-warm-white/30 text-warm-white hover:bg-warm-white hover:text-charcoal text-base px-8 py-4">Nous contacter</a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

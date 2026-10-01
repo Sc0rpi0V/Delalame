@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ title }} — {{ site_name }}{% endblock %}
+{% block meta_description %}{{ title }} de {{ site_name }} — informations légales et réglementaires.{% endblock %}
+
+{% block body %}
+
+<div class="bg-stone-light py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h1 class="section-title">{{ title }}</h1>
+        {% if page %}
+        <p class="text-xs text-muted mt-2 font-sans">Dernière mise à jour : {{ page.updatedAt|date('d/m/Y') }}</p>
+        {% endif %}
+    </div>
+</div>
+
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    {% if page and page.content %}
+        <div class="prose prose-lg max-w-none font-sans text-charcoal">
+            {{ page.content|raw }}
+        </div>
+    {% else %}
+        <div class="text-center py-16 text-muted font-sans">
+            <p class="text-lg">Cette page est en cours de rédaction.</p>
+            <p class="text-sm mt-2">Revenez prochainement ou <a href="{{ path('app_contact') }}" class="underline hover:text-charcoal transition-colors">contactez-nous</a> pour toute question.</p>
+        </div>
+    {% endif %}
+</div>
+
+{% endblock %}

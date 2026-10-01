@@ -1,0 +1,104 @@
+{% extends '@EasyAdmin/layout.html.twig' %}
+
+{% block page_title %}Coordonnées & Horaires{% endblock %}
+
+{% block main %}
+
+{% for type, messages in app.flashes %}
+    {% for message in messages %}
+        <div class="alert alert-{{ type == 'success' ? 'success' : 'danger' }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    {% endfor %}
+{% endfor %}
+
+{{ form_start(form) }}
+
+<div class="row g-4">
+
+    <div class="col-12 col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title mb-0"><i class="fa fa-map-marker-alt me-2"></i>Coordonnées</h3>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    {{ form_label(form.contact_address, null, {label_attr: {class: 'form-label fw-semibold'}}) }}
+                    {{ form_widget(form.contact_address, {attr: {class: 'form-control', placeholder: '12 rue des Artisans, 75001 Paris'}}) }}
+                    <div class="form-text">
+                        Affiché dans le bloc adresse (page contact, footer). La carte de la page contact se
+                        repositionne automatiquement à l'enregistrement.
+                        {% if site_settings.contact_lat and site_settings.contact_lng %}
+                            <span class="text-success"><i class="fa fa-check-circle"></i> Adresse localisée sur la carte.</span>
+                        {% else %}
+                            <span class="text-warning"><i class="fa fa-exclamation-triangle"></i> Adresse pas encore localisée — enregistrez pour générer la carte.</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="mb-3">
+                    {{ form_label(form.contact_phone, null, {label_attr: {class: 'form-label fw-semibold'}}) }}
+                    {{ form_widget(form.contact_phone, {attr: {class: 'form-control', placeholder: '01 23 45 67 89'}}) }}
+                </div>
+                <div class="mb-3">
+                    {{ form_label(form.contact_phone_raw, null, {label_attr: {class: 'form-label fw-semibold'}}) }}
+                    {{ form_widget(form.contact_phone_raw, {attr: {class: 'form-control', placeholder: '+33123456789'}}) }}
+                    <div class="form-text">Utilisé pour le lien <code>tel:</code> — sans espaces, avec indicatif.</div>
+                </div>
+                <div class="mb-0">
+                    {{ form_label(form.contact_email, null, {label_attr: {class: 'form-label fw-semibold'}}) }}
+                    {{ form_widget(form.contact_email, {attr: {class: 'form-control', placeholder: 'contact@exemple.fr'}}) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title mb-0"><i class="fa fa-clock me-2"></i>Horaires</h3>
+            </div>
+            <div class="card-body">
+                <div class="row g-3 mb-3">
+                    <div class="col-6">
+                        {{ form_label(form.hours_weekdays_label, null, {label_attr: {class: 'form-label fw-semibold'}}) }}
+                        {{ form_widget(form.hours_weekdays_label, {attr: {class: 'form-control'}}) }}
+                    </div>
+                    <div class="col-6">
+                        {{ form_label(form.hours_weekdays_value, null, {label_attr: {class: 'form-label fw-semibold'}}) }}
+                        {{ form_widget(form.hours_weekdays_value, {attr: {class: 'form-control'}}) }}
+                    </div>
+                </div>
+                <div class="row g-3 mb-3">
+                    <div class="col-6">
+                        {{ form_label(form.hours_saturday_label, null, {label_attr: {class: 'form-label fw-semibold'}}) }}
+                        {{ form_widget(form.hours_saturday_label, {attr: {class: 'form-control'}}) }}
+                    </div>
+                    <div class="col-6">
+                        {{ form_label(form.hours_saturday_value, null, {label_attr: {class: 'form-label fw-semibold'}}) }}
+                        {{ form_widget(form.hours_saturday_value, {attr: {class: 'form-control'}}) }}
+                    </div>
+                </div>
+                <div class="row g-3 mb-0">
+                    <div class="col-6">
+                        {{ form_label(form.hours_sunday_label, null, {label_attr: {class: 'form-label fw-semibold'}}) }}
+                        {{ form_widget(form.hours_sunday_label, {attr: {class: 'form-control'}}) }}
+                    </div>
+                    <div class="col-6">
+                        {{ form_label(form.hours_sunday_value, null, {label_attr: {class: 'form-label fw-semibold'}}) }}
+                        {{ form_widget(form.hours_sunday_value, {attr: {class: 'form-control'}}) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="mt-4">
+    {{ form_widget(form.save) }}
+</div>
+
+{{ form_end(form) }}
+
+{% endblock %}

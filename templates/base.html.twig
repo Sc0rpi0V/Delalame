@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{{ site_name }}{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}Menuiserie artisanale — fenêtres, portes, volets et portes de garage sur mesure.{% endblock %}">
+
+    {# Indexation : ouverte par défaut, une page peut surcharger ce bloc (ex: noindex) #}
+    <meta name="robots" content="{% block robots %}index, follow{% endblock %}">
+
+    {# URL canonique : évite les problèmes de contenu dupliqué #}
+    {% set canonical_url = app.request.schemeAndHttpHost ~ app.request.pathInfo %}
+    <link rel="canonical" href="{% block canonical %}{{ canonical_url }}{% endblock %}">
+
+    {# Open Graph (partage réseaux sociaux) #}
+    <meta property="og:site_name" content="{{ site_name }}">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="fr_FR">
+    <meta property="og:title" content="{% block og_title %}{{ block('title') }}{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}{{ block('meta_description') }}{% endblock %}">
+    <meta property="og:url" content="{{ canonical_url }}">
+    {% block og_image %}{% endblock %}
+
+    {# Twitter Card #}
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ block('og_title') }}">
+    <meta name="twitter:description" content="{{ block('og_description') }}">
+
+    <link rel="icon" href="{{ asset('favicon.svg') }}" type="image/svg+xml">
+
+    {# Données structurées (schema.org) : aide le référencement local #}
+    {% set business_schema = {
+        '@context': 'https://schema.org',
+        '@type': 'HomeAndConstructionBusiness',
+        'name': site_name,
+        'telephone': site_settings.contact_phone_raw ?? '',
+        'email': site_settings.contact_email ?? '',
+        'address': {
+            '@type': 'PostalAddress',
+            'streetAddress': site_settings.contact_address ?? '',
+            'addressCountry': 'FR',
+        },
+        'url': app.request.schemeAndHttpHost,
+    } %}
+    <script type="application/ld+json">{{ business_schema|json_encode|raw }}</script>
+
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
+    {% block head_extra %}{% endblock %}
+</head>
+<body class="flex flex-col min-h-screen bg-warm-white">
+
+{# ─── Navigation ─── #}
+<header
+    x-data="{ open: false, scrolled: false }"
+    x-init="window.addEventListener('scroll', () => scrolled = window.scrollY > 40)"
+    :class="scrolled ? 'shadow-craft bg-warm-white/95 backdrop-blur-sm' : 'bg-warm-white'"
+    class="sticky top-0 z-40 transition-all duration-300"
+>
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16 md:h-20">
+
+        {# Logo #}
+        <a href="{{ path('app_home') }}" class="flex items-center gap-3 group">
+            <div class="w-10 h-10 bg-wood rounded-craft flex items-center justify-center">
+                <svg class="w-6 h-6 text-warm-white" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+                    <polyline points="9 22 9 12 15 12 15 22" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                </svg>
+            </div>
+            <div class="hidden sm:block">
+                <div class="font-serif font-semibold text-charcoal leading-tight group-hover:text-wood transition-colors">{{ site_name }}</div>
+                <div class="text-xs text-muted font-sans">Fenêtres · Portes · Volets · Garages</div>
+            </div>
+        </a>
+
+        {# Desktop menu #}
+        <ul class="hidden md:flex items-center gap-8">
+            <li><a href="{{ path('app_home') }}" class="nav-link {% if app.current_route == 'app_home' %}nav-link-active{% endif %}">Accueil</a></li>
+            <li><a href="{{ path('app_services') }}" class="nav-link {% if app.current_route == 'app_services' %}nav-link-active{% endif %}">Services</a></li>
+            <li><a href="{{ path('app_gallery') }}" class="nav-link {% if app.current_route == 'app_gallery' %}nav-link-active{% endif %}">Réalisations</a></li>
+            <li><a href="{{ path('app_equipe') }}" class="nav-link {% if app.current_route == 'app_equipe' %}nav-link-active{% endif %}">Notre équipe</a></li>
+            <li><a href="{{ path('app_contact') }}" class="nav-link {% if app.current_route == 'app_contact' %}nav-link-active{% endif %}">Contact</a></li>
+        </ul>
+
+        {# CTA + hamburger #}
+        <div class="flex items-center gap-3">
+            <a href="{{ path('app_services') }}" class="btn-primary hidden md:inline-flex text-sm">
+                Demander un devis
+            </a>
+            <button
+                @click="open = !open"
+                class="md:hidden p-2 rounded-craft text-charcoal hover:text-wood transition-colors"
+                :aria-expanded="open.toString()"
+                aria-controls="mobile-menu"
+                aria-label="Menu"
+            >
+                <svg x-show="!open" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                <svg x-show="open" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+        </div>
+    </nav>
+
+    {# Mobile menu #}
+    <div
+        id="mobile-menu"
+        x-show="open"
+        x-transition:enter="transition ease-out duration-200"
+        x-transition:enter-start="opacity-0 -translate-y-2"
+        x-transition:enter-end="opacity-100 translate-y-0"
+        x-transition:leave="transition ease-in duration-150"
+        x-transition:leave-start="opacity-100 translate-y-0"
+        x-transition:leave-end="opacity-0 -translate-y-2"
+        @click.away="open = false"
+        class="md:hidden border-t border-stone-light bg-warm-white"
+    >
+        <ul class="px-4 py-4 space-y-2">
+            <li><a href="{{ path('app_home') }}" class="block py-2 font-sans font-medium text-charcoal hover:text-wood transition-colors">Accueil</a></li>
+            <li><a href="{{ path('app_services') }}" class="block py-2 font-sans font-medium text-charcoal hover:text-wood transition-colors">Services</a></li>
+            <li><a href="{{ path('app_gallery') }}" class="block py-2 font-sans font-medium text-charcoal hover:text-wood transition-colors">Réalisations</a></li>
+            <li><a href="{{ path('app_equipe') }}" class="block py-2 font-sans font-medium text-charcoal hover:text-wood transition-colors">Notre équipe</a></li>
+            <li><a href="{{ path('app_contact') }}" class="block py-2 font-sans font-medium text-charcoal hover:text-wood transition-colors">Contact</a></li>
+            <li class="pt-2 border-t border-stone-light">
+                <a href="{{ path('app_services') }}" class="btn-primary w-full justify-center">Demander un devis</a>
+            </li>
+        </ul>
+    </div>
+</header>
+
+{# ─── Bannière cookies (RGPD) ─── #}
+<div
+    x-data="{
+        show: false,
+        init() { this.show = document.cookie.split('; ').every(c => !c.startsWith('cookie_consent=')); },
+        accept() {
+            document.cookie = 'cookie_consent=1; max-age=' + (60*60*24*365*2) + '; path=/; SameSite=Lax';
+            this.show = false;
+        },
+    }"
+    x-show="show"
+    x-cloak
+    class="fixed bottom-0 inset-x-0 z-50 bg-charcoal text-warm-white/90 px-4 py-4 sm:px-6"
+    role="region"
+    aria-label="Consentement cookies"
+>
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center gap-4">
+        <p class="text-sm font-sans flex-1">
+            Ce site utilise des cookies strictement nécessaires à son fonctionnement (session).
+            Aucun cookie de mesure d'audience ou publicitaire n'est utilisé.
+            <a href="{{ path('app_politique_confidentialite') }}" class="underline hover:text-amber-craft transition-colors">En savoir plus</a>.
+        </p>
+        <button @click="accept()" class="btn-primary text-sm shrink-0 whitespace-nowrap">J'ai compris</button>
+    </div>
+</div>
+
+{# ─── Flash messages ─── #}
+{% for type, messages in app.flashes %}
+    {% for message in messages %}
+        <div
+            x-data="{ show: true }"
+            x-show="show"
+            x-init="setTimeout(() => show = false, 5000)"
+            class="fixed top-24 right-4 z-50 max-w-md p-4 rounded-craft shadow-craft-md flex items-start gap-3
+                   {% if type == 'success' %}bg-sage/10 border border-sage text-slate-green
+                   {% elseif type == 'error' %}bg-brick/10 border border-brick text-brick
+                   {% else %}bg-amber-craft/10 border border-amber-craft text-wood-dark{% endif %}"
+        >
+            <p class="text-sm font-sans">{{ message }}</p>
+            <button @click="show = false" class="ml-auto shrink-0 opacity-60 hover:opacity-100 transition-opacity">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+        </div>
+    {% endfor %}
+{% endfor %}
+
+{# ─── Main content ─── #}
+<main class="flex-grow">
+    {% block body %}{% endblock %}
+</main>
+
+{# ─── Footer ─── #}
+<footer class="bg-charcoal text-warm-white/80 mt-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+
+            <div>
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-8 h-8 bg-wood rounded-craft flex items-center justify-center">
+                        <svg class="w-5 h-5 text-warm-white" fill="currentColor" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+                    </div>
+                    <span class="font-serif font-semibold text-warm-white">{{ site_name }}</span>
+                </div>
+                <p class="text-sm leading-relaxed">Fourniture et pose de fenêtres, portes, volets et portes de garage — PVC, aluminium, bois, tous matériaux.</p>
+            </div>
+
+            <div>
+                <h3 class="font-serif text-warm-white font-semibold mb-4">Navigation</h3>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="{{ path('app_services') }}" class="hover:text-warm-white transition-colors">Services</a></li>
+                    <li><a href="{{ path('app_gallery') }}" class="hover:text-warm-white transition-colors">Réalisations</a></li>
+                    <li><a href="{{ path('app_equipe') }}" class="hover:text-warm-white transition-colors">Notre équipe</a></li>
+                    <li><a href="{{ path('app_contact') }}" class="hover:text-warm-white transition-colors">Contact</a></li>
+                    <li><a href="{{ path('app_services') }}" class="hover:text-amber-craft transition-colors font-medium">Demander un devis</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h3 class="font-serif text-warm-white font-semibold mb-4">Informations légales</h3>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="{{ path('app_mentions_legales') }}" class="hover:text-warm-white transition-colors">Mentions légales</a></li>
+                    <li><a href="{{ path('app_cgv') }}" class="hover:text-warm-white transition-colors">CGV</a></li>
+                    <li><a href="{{ path('app_cgu') }}" class="hover:text-warm-white transition-colors">CGU</a></li>
+                    <li><a href="{{ path('app_politique_confidentialite') }}" class="hover:text-warm-white transition-colors">Politique de confidentialité</a></li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="mt-10 pt-6 border-t border-warm-white/10 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-warm-white/50">
+            <p>© {{ "now"|date("Y") }} {{ site_name }}. Tous droits réservés.</p>
+        </div>
+    </div>
+</footer>
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
+{% endblock %}
+{% block body_extra %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,94 @@
+{% extends '@EasyAdmin/layout.html.twig' %}
+
+{% block main %}
+<div class="row g-4 mb-4">
+
+    <div class="col-sm-6 col-lg-4">
+        <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body d-flex align-items-center gap-3">
+                <div class="rounded-circle bg-primary bg-opacity-10 p-3">
+                    <i class="fa fa-tools fa-lg text-primary"></i>
+                </div>
+                <div>
+                    <div class="fs-2 fw-bold text-primary">{{ stats.services_total }}</div>
+                    <div class="text-muted small">Service(s) publié(s)</div>
+                </div>
+            </div>
+            <div class="card-footer bg-transparent border-0 pt-0">
+                <a href="{{ ea_url().setController('App\\Controller\\Admin\\ServiceCrudController') }}"
+                   class="btn btn-sm btn-outline-primary w-100">Gérer les services & mails</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6 col-lg-4">
+        <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body d-flex align-items-center gap-3">
+                <div class="rounded-circle bg-success bg-opacity-10 p-3">
+                    <i class="fa fa-images fa-lg text-success"></i>
+                </div>
+                <div>
+                    <div class="fs-2 fw-bold text-success">{{ stats.gallery_total }}</div>
+                    <div class="text-muted small">Image(s) en galerie</div>
+                </div>
+            </div>
+            <div class="card-footer bg-transparent border-0 pt-0">
+                <a href="{{ ea_url().setController('App\\Controller\\Admin\\GalleryImageCrudController') }}"
+                   class="btn btn-sm btn-outline-success w-100">Gérer la galerie</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6 col-lg-4">
+        <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body d-flex align-items-center gap-3">
+                <div class="rounded-circle bg-secondary bg-opacity-10 p-3">
+                    <i class="fa fa-file-contract fa-lg text-secondary"></i>
+                </div>
+                <div>
+                    <div class="fs-2 fw-bold text-secondary">4</div>
+                    <div class="text-muted small">Pages légales</div>
+                </div>
+            </div>
+            <div class="card-footer bg-transparent border-0 pt-0">
+                <a href="{{ ea_url().setRoute('admin_legal_pages') }}"
+                   class="btn btn-sm btn-outline-secondary w-100">Gérer le contenu</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="card border-0 shadow-sm">
+    <div class="card-header bg-transparent fw-semibold">Accès rapides</div>
+    <div class="card-body d-flex flex-wrap gap-2">
+        <a href="{{ ea_url().setController('App\\Controller\\Admin\\GalleryImageCrudController').setAction('new') }}"
+           class="btn btn-sm btn-primary">
+            <i class="fa fa-plus me-1"></i> Ajouter une image
+        </a>
+        <a href="{{ path('admin_legal_pages') }}"
+           class="btn btn-sm btn-outline-secondary">
+            <i class="fa fa-file-alt me-1"></i> Éditer les pages légales
+        </a>
+        <a href="{{ path('admin_home_content') }}"
+           class="btn btn-sm btn-outline-secondary">
+            <i class="fa fa-home me-1"></i> Page d'accueil
+        </a>
+        <a href="{{ path('admin_site_settings') }}"
+           class="btn btn-sm btn-outline-secondary">
+            <i class="fa fa-map-marker-alt me-1"></i> Coordonnées & Horaires
+        </a>
+        <a href="{{ path('admin_team_page') }}"
+           class="btn btn-sm btn-outline-secondary">
+            <i class="fa fa-align-left me-1"></i> Présentation équipe
+        </a>
+        <a href="{{ ea_url().setController('App\\Controller\\Admin\\TeamMemberCrudController') }}"
+           class="btn btn-sm btn-outline-secondary">
+            <i class="fa fa-users me-1"></i> Membres
+        </a>
+        <a href="{{ path('app_home') }}" target="_blank" class="btn btn-sm btn-outline-dark">
+            <i class="fa fa-eye me-1"></i> Voir le site
+        </a>
+    </div>
+</div>
+{% endblock %}

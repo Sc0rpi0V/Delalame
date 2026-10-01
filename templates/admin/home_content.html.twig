@@ -1,0 +1,133 @@
+{% extends '@EasyAdmin/layout.html.twig' %}
+
+{% block page_title %}Page d'accueil — contenu{% endblock %}
+
+{% block main %}
+
+{% for type, messages in app.flashes %}
+    {% for message in messages %}
+        <div class="alert alert-{{ type == 'success' ? 'success' : 'danger' }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    {% endfor %}
+{% endfor %}
+
+{{ form_start(form) }}
+
+<div class="row g-4">
+
+    {# Hero #}
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header"><h3 class="card-title mb-0"><i class="fa fa-star me-2"></i>Section hero</h3></div>
+            <div class="card-body">
+                <div class="mb-0">
+                    {{ form_label(form.home_hero_desc, null, {label_attr: {class: 'form-label fw-semibold'}}) }}
+                    {{ form_widget(form.home_hero_desc, {attr: {class: 'form-control'}}) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# Services #}
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header"><h3 class="card-title mb-0"><i class="fa fa-th-large me-2"></i>Section services</h3></div>
+            <div class="card-body">
+                <div class="row g-3 mb-4">
+                    <div class="col-md-6">
+                        {{ form_label(form.home_services_title, null, {label_attr: {class: 'form-label fw-semibold'}}) }}
+                        {{ form_widget(form.home_services_title, {attr: {class: 'form-control'}}) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_label(form.home_services_subtitle, null, {label_attr: {class: 'form-label fw-semibold'}}) }}
+                        {{ form_widget(form.home_services_subtitle, {attr: {class: 'form-control'}}) }}
+                    </div>
+                </div>
+                <div class="row g-4">
+                    {% for i in 1..4 %}
+                    <div class="col-md-6">
+                        <div class="border rounded p-3">
+                            <p class="fw-semibold text-muted small mb-2">Service {{ i }}</p>
+                            <div class="row g-2 mb-2">
+                                <div class="col-3">
+                                    {{ form_label(form['home_service_' ~ i ~ '_icon'], null, {label_attr: {class: 'form-label small'}}) }}
+                                    {{ form_widget(form['home_service_' ~ i ~ '_icon'], {attr: {class: 'form-control form-control-sm'}}) }}
+                                </div>
+                                <div class="col-9">
+                                    {{ form_label(form['home_service_' ~ i ~ '_name'], null, {label_attr: {class: 'form-label small'}}) }}
+                                    {{ form_widget(form['home_service_' ~ i ~ '_name'], {attr: {class: 'form-control form-control-sm'}}) }}
+                                </div>
+                            </div>
+                            {{ form_label(form['home_service_' ~ i ~ '_desc'], null, {label_attr: {class: 'form-label small'}}) }}
+                            {{ form_widget(form['home_service_' ~ i ~ '_desc'], {attr: {class: 'form-control form-control-sm'}}) }}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# Atouts #}
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header"><h3 class="card-title mb-0"><i class="fa fa-check-circle me-2"></i>Section atouts</h3></div>
+            <div class="card-body">
+                <div class="row g-4">
+                    {% for i in 1..3 %}
+                    <div class="col-md-4">
+                        <div class="border rounded p-3">
+                            <p class="fw-semibold text-muted small mb-2">Atout {{ i }}</p>
+                            <div class="row g-2 mb-2">
+                                <div class="col-3">
+                                    {{ form_label(form['home_atout_' ~ i ~ '_icon'], null, {label_attr: {class: 'form-label small'}}) }}
+                                    {{ form_widget(form['home_atout_' ~ i ~ '_icon'], {attr: {class: 'form-control form-control-sm'}}) }}
+                                </div>
+                                <div class="col-9">
+                                    {{ form_label(form['home_atout_' ~ i ~ '_title'], null, {label_attr: {class: 'form-label small'}}) }}
+                                    {{ form_widget(form['home_atout_' ~ i ~ '_title'], {attr: {class: 'form-control form-control-sm'}}) }}
+                                </div>
+                            </div>
+                            {{ form_label(form['home_atout_' ~ i ~ '_desc'], null, {label_attr: {class: 'form-label small'}}) }}
+                            {{ form_widget(form['home_atout_' ~ i ~ '_desc'], {attr: {class: 'form-control form-control-sm'}}) }}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# Statistiques #}
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header"><h3 class="card-title mb-0"><i class="fa fa-chart-bar me-2"></i>Chiffres clés</h3></div>
+            <div class="card-body">
+                <div class="row g-4">
+                    {% for i in 1..4 %}
+                    <div class="col-md-3">
+                        <div class="border rounded p-3">
+                            <p class="fw-semibold text-muted small mb-2">Statistique {{ i }}</p>
+                            {{ form_label(form['home_stat_' ~ i ~ '_value'], null, {label_attr: {class: 'form-label small'}}) }}
+                            {{ form_widget(form['home_stat_' ~ i ~ '_value'], {attr: {class: 'form-control form-control-sm mb-2'}}) }}
+                            {{ form_label(form['home_stat_' ~ i ~ '_label'], null, {label_attr: {class: 'form-label small'}}) }}
+                            {{ form_widget(form['home_stat_' ~ i ~ '_label'], {attr: {class: 'form-control form-control-sm'}}) }}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="mt-4">
+    {{ form_widget(form.save) }}
+</div>
+
+{{ form_end(form) }}
+
+{% endblock %}

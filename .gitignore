@@ -1,0 +1,56 @@
+# Fichiers d'environnement : jamais versionnés (seul le modèle .env.dist l'est)
+/.env
+/.env.*
+!/.env.dist
+
+###> symfony/framework-bundle ###
+/config/secrets/prod/prod.decrypt.private.php
+/config/secrets/prod/prod.decrypt.private.pem
+/public/bundles/
+/var/
+/vendor/
+###< symfony/framework-bundle ###
+
+###> symfony/webpack-encore-bundle ###
+/node_modules/
+/public/build/
+npm-debug.log
+yarn-error.log
+###< symfony/webpack-encore-bundle ###
+
+###> phpunit/phpunit ###
+/phpunit.xml
+/.phpunit.cache/
+###< phpunit/phpunit ###
+
+# Uploads utilisateurs
+/private/uploads/
+/public/uploads/gallery/*
+!/public/uploads/gallery/.gitkeep
+
+# Cache d'images LiipImagine (régénéré à la demande)
+/public/media/cache/
+
+# Design interne (maquettes, charte, vidéo) — non versionné
+/design/
+
+# Notes de suivi internes (TODO, évolutions) — non versionnées
+/notes/
+
+# Claude Code (docs, specs, réglages locaux)
+/.claude/
+CLAUDE.md
+CLAUDE.local.md
+
+# ddev : la config est versionnée, les fichiers générés sont ignorés par .ddev/.gitignore
+/.ddev/db_snapshots/
+
+# Dumps / sauvegardes
+*.sql
+*.sql.gz
+
+# IDE / OS
+/.idea/
+/.vscode/
+.DS_Store
+Thumbs.db

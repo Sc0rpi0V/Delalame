@@ -1,0 +1,118 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+:root {
+  --color-warm-white: #F8F5F0;
+  --color-stone-light: #EDEAE4;
+  --color-wood: #7C5C3E;
+  --color-wood-dark: #4E3728;
+  --color-slate-green: #4A6741;
+  --color-sage: #6B8F5E;
+  --color-charcoal: #2D2926;
+  --color-muted: #6B6460;
+  --color-amber-craft: #C98B2E;
+  --color-brick: #B94A48;
+  --color-forest: #3A6B35;
+}
+
+@layer base {
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply bg-warm-white text-charcoal font-sans;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3 {
+    @apply font-serif;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center gap-2 px-6 py-3 bg-wood text-warm-white font-sans font-medium
+           rounded-craft transition-colors duration-200 hover:bg-wood-dark focus:outline-none
+           focus:ring-2 focus:ring-wood focus:ring-offset-2;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 border border-wood text-wood font-sans font-medium
+           rounded-craft transition-colors duration-200 hover:bg-wood hover:text-warm-white
+           focus:outline-none focus:ring-2 focus:ring-wood focus:ring-offset-2;
+  }
+
+  .btn-accent {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 bg-amber-craft text-warm-white font-sans font-medium
+           rounded-craft transition-colors duration-200 hover:bg-wood focus:outline-none
+           focus:ring-2 focus:ring-amber-craft focus:ring-offset-2;
+  }
+
+  .section-title {
+    @apply font-serif text-3xl md:text-4xl text-charcoal;
+  }
+
+  .section-subtitle {
+    @apply text-muted font-sans text-lg;
+  }
+
+  .card {
+    @apply bg-white rounded-craft shadow-craft overflow-hidden transition-shadow duration-200
+           hover:shadow-craft-md;
+  }
+
+  .form-label {
+    @apply block text-sm font-medium text-charcoal mb-1;
+  }
+
+  .form-input {
+    @apply w-full px-4 py-2.5 border border-stone-light rounded-craft bg-white text-charcoal
+           placeholder-muted transition-colors duration-200
+           focus:outline-none focus:ring-2 focus:ring-wood focus:border-wood;
+  }
+
+  .form-textarea {
+    @apply form-input resize-y min-h-[120px];
+  }
+
+  .form-error {
+    @apply mt-1 text-sm text-brick;
+  }
+
+  .nav-link {
+    @apply text-charcoal font-sans font-medium transition-colors duration-200
+           hover:text-wood relative after:absolute after:bottom-0 after:left-0
+           after:w-0 after:h-0.5 after:bg-wood after:transition-all after:duration-200
+           hover:after:w-full;
+  }
+
+  .nav-link-active {
+    @apply text-wood after:w-full;
+  }
+
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 text-xs font-medium rounded-full;
+  }
+
+  .badge-wood {
+    @apply badge bg-wood/10 text-wood;
+  }
+
+  .badge-green {
+    @apply badge bg-sage/10 text-slate-green;
+  }
+}
+
+[x-cloak] {
+  display: none !important;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}

@@ -1,0 +1,92 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nos services — {{ site_name }}{% endblock %}
+{% block meta_description %}Installation et remplacement de fenêtres, portes, portes de garage et volets. PVC, aluminium, bois — devis gratuit par email.{% endblock %}
+
+{% block body %}
+
+<div class="bg-stone-light py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h1 class="section-title mb-2">Nos services</h1>
+        <p class="section-subtitle">Installation, remplacement et rénovation de toutes vos menuiseries extérieures</p>
+    </div>
+</div>
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-20">
+
+    {% set contact_email = site_settings.contact_email ?? '' %}
+
+    {% for service in services %}
+    {# mailto : CRLF entre les lignes (RFC 6068), zone libre à compléter par le visiteur sous le message pré-rédigé #}
+    {% set mail_body = service.mailBody|trim ~ "\n\n----------\nInformations complémentaires (dimensions, adresse du chantier, délais souhaités…) :\n\n" %}
+    {% set mailto = 'mailto:' ~ contact_email ~ '?subject=' ~ service.mailSubject|url_encode ~ '&body=' ~ mail_body|replace({"\r\n": "\n"})|replace({"\n": "\r\n"})|url_encode %}
+    <div id="service-{{ service.id }}" class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div class="{% if loop.index is even %}lg:order-2{% endif %}">
+            <div class="text-5xl mb-4">{{ service.icon }}</div>
+            <h2 class="font-serif text-3xl font-semibold text-charcoal mb-3">{{ service.name }}</h2>
+            <p class="text-muted font-sans leading-relaxed mb-6">{{ service.intro }}</p>
+            <ul class="space-y-2 mb-8">
+                {% for point in service.points %}
+                <li class="flex items-start gap-2 text-charcoal font-sans text-sm">
+                    <svg class="w-5 h-5 text-sage shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                    </svg>
+                    {{ point }}
+                </li>
+                {% endfor %}
+            </ul>
+            {% if contact_email %}
+            <a href="{{ mailto }}" class="btn-primary">Demander un devis pour ce service</a>
+            {% else %}
+            <a href="{{ path('app_contact') }}" class="btn-primary">Nous contacter pour ce service</a>
+            {% endif %}
+        </div>
+        <div class="{% if loop.index is even %}lg:order-1{% endif %} bg-stone-light rounded-craft aspect-video flex items-center justify-center">
+            <span class="text-8xl opacity-20">{{ service.icon }}</span>
+        </div>
+    </div>
+    {% else %}
+    <p class="text-center text-muted font-sans">Nos services seront bientôt présentés ici. <a href="{{ path('app_contact') }}" class="underline hover:text-wood">Contactez-nous</a> en attendant.</p>
+    {% endfor %}
+
+</div>
+
+{# ─── Matériaux ─── #}
+<section class="bg-stone-light py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="section-title text-center mb-3">Nos matériaux</h2>
+        <p class="section-subtitle text-center mb-10">Nous travaillons avec les meilleures marques du marché</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {% for mat in [
+                {name: 'PVC', badge: 'Économique', desc: 'Très bon isolant, entretien quasi nul, large choix de coloris. Idéal pour la plupart des rénovations.'},
+                {name: 'Aluminium', badge: 'Design', desc: 'Finesse des profilés, grandes portées possibles, résistance aux intempéries. Esthétique contemporaine.'},
+                {name: 'Bois', badge: 'Naturel', desc: "Matériau noble et régulateur d'humidité. Nécessite un entretien régulier, incomparable côté chaleur."},
+                {name: 'Mixte bois-alu', badge: 'Premium', desc: "Chaleur du bois à l'intérieur, résistance de l'aluminium à l'extérieur. Le meilleur des deux mondes."},
+            ] %}
+            <div class="bg-white rounded-craft p-6 shadow-craft">
+                <div class="flex items-center justify-between mb-3">
+                    <span class="font-serif text-xl font-bold text-charcoal">{{ mat.name }}</span>
+                    <span class="badge-wood text-xs">{{ mat.badge }}</span>
+                </div>
+                <p class="text-sm text-muted font-sans leading-relaxed">{{ mat.desc }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{# ─── Aides financières ─── #}
+<section class="py-16 bg-warm-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-amber-craft/10 border border-amber-craft/30 rounded-craft p-8">
+            <h2 class="font-serif text-2xl font-semibold text-charcoal mb-3">💡 Aides financières disponibles</h2>
+            <p class="text-muted font-sans mb-4 leading-relaxed">
+                Selon votre situation, vous pouvez bénéficier de <strong>MaPrimeRénov'</strong>, de l'<strong>éco-PTZ</strong> ou d'une <strong>TVA à 5,5 %</strong> pour vos travaux de rénovation thermique.
+                Nous vous accompagnons dans le montage de votre dossier.
+            </p>
+            <a href="{{ path('app_contact') }}" class="btn-primary">Parler à un conseiller</a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

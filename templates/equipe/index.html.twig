@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Notre équipe — {{ site_name }}{% endblock %}
+{% block meta_description %}Rencontrez notre équipe de poseurs et conseillers spécialisés en menuiseries extérieures.{% endblock %}
+
+{% block body %}
+
+<div class="bg-stone-light py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h1 class="section-title mb-2">Notre équipe</h1>
+        <p class="section-subtitle">Des professionnels à votre écoute, du devis à la réception de chantier</p>
+    </div>
+</div>
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+
+    {# Bloc intro éditable depuis le back-office #}
+    {% if team_intro %}
+    <div class="max-w-3xl mb-16">
+        <h2 class="font-serif text-2xl font-semibold text-charcoal mb-4">Qui sommes-nous ?</h2>
+        <div class="space-y-4 text-muted font-sans leading-relaxed">
+            {{ team_intro|raw }}
+        </div>
+    </div>
+    {% endif %}
+
+    {# Cartes membres #}
+    {% if members|length > 0 %}
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
+        {% for member in members %}
+        <div class="card p-6 text-center">
+            <div class="w-20 h-20 rounded-full bg-stone-light mx-auto mb-4 flex items-center justify-center">
+                <span class="text-2xl font-serif font-bold text-wood">{{ member.initials }}</span>
+            </div>
+            <h3 class="font-serif font-semibold text-charcoal text-lg">{{ member.name }}</h3>
+            <p class="text-sm text-wood font-sans font-medium mt-1">{{ member.role }}</p>
+            <p class="text-xs text-muted mt-3 font-sans">{{ member.yearsExperience }} ans d'expérience · {{ member.specialty }}</p>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {# Certifications & engagements #}
+    <div class="bg-stone-light rounded-craft p-10 mb-16">
+        <h2 class="font-serif text-2xl font-semibold text-charcoal text-center mb-8">Certifications & engagements</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-center">
+            {% for item in [
+                {icon: '🏅', label: 'RGE Qualibat', desc: "Reconnu Garant de l'Environnement — ouvre droit aux aides MaPrimeRénov'"},
+                {icon: '🔒', label: 'Garantie décennale', desc: '10 ans de couverture sur toutes nos poses'},
+                {icon: '📋', label: 'Devis gratuit', desc: 'Chiffrage transparent, sans engagement, sous 48 h'},
+                {icon: '🚚', label: 'Pose & SAV', desc: 'Équipe propre, ponctuelle, avec nettoyage de chantier inclus'},
+            ] %}
+            <div>
+                <div class="text-4xl mb-2">{{ item.icon }}</div>
+                <div class="font-sans font-semibold text-charcoal text-sm mb-1">{{ item.label }}</div>
+                <p class="text-xs text-muted font-sans">{{ item.desc }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="bg-wood rounded-craft p-10 text-warm-white text-center">
+        <h2 class="font-serif text-2xl font-semibold mb-3">Nous rejoindre ?</h2>
+        <p class="text-warm-white/75 font-sans mb-6 max-w-xl mx-auto">Nous recherchons régulièrement des poseurs qualifiés et des conseillers techniques. Envoyez-nous votre candidature.</p>
+        <a href="{{ path('app_contact') }}" class="btn-accent">Candidature spontanée</a>
+    </div>
+
+</div>
+
+{% endblock %}

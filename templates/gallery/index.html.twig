@@ -1,0 +1,117 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nos réalisations — {{ site_name }}{% endblock %}
+{% block meta_description %}Découvrez nos réalisations en menuiserie : fenêtres, portes, volets et portes de garage fabriqués sur mesure.{% endblock %}
+
+{% block body %}
+
+<div class="bg-stone-light py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h1 class="section-title mb-2">Nos réalisations</h1>
+        <p class="section-subtitle">Chaque projet est unique — voici quelques-uns dont nous sommes fiers</p>
+    </div>
+</div>
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    {# Category filter #}
+    {% if categories|length > 0 %}
+    <div class="flex flex-wrap gap-2 mb-10">
+        <a href="{{ path('app_gallery') }}"
+           class="px-4 py-2 rounded-full text-sm font-sans font-medium transition-colors
+                  {% if active_category is null %}bg-wood text-warm-white{% else %}bg-stone-light text-charcoal hover:bg-wood hover:text-warm-white{% endif %}">
+            Toutes
+        </a>
+        {% for cat in categories %}
+        <a href="{{ path('app_gallery', {categorie: cat}) }}"
+           class="px-4 py-2 rounded-full text-sm font-sans font-medium transition-colors
+                  {% if active_category == cat %}bg-wood text-warm-white{% else %}bg-stone-light text-charcoal hover:bg-wood hover:text-warm-white{% endif %}">
+            {{ category_labels[cat] ?? cat|capitalize }}
+        </a>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {# Gallery grid #}
+    {% if images|length > 0 %}
+    {% set featured_shown = 0 %}
+    <div class="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4">
+        {% for image in images %}
+        {% set show_badge = image.featured and featured_shown < 5 %}
+        {% if show_badge %}{% set featured_shown = featured_shown + 1 %}{% endif %}
+        <div class="break-inside-avoid">
+            <div class="relative">
+                {% if show_badge %}
+                <span class="absolute top-2 left-2 z-10 bg-amber-craft text-white text-xs font-sans font-semibold px-2 py-1 rounded shadow">
+                    ★ À la une
+                </span>
+                {% endif %}
+                <button
+                    class="w-full block rounded-craft overflow-hidden shadow-craft hover:shadow-craft-md transition-shadow group"
+                    data-lightbox="{{ vich_uploader_asset(image, 'imageFile') | imagine_filter('gallery_full') }}"
+                    data-caption="{{ image.title }}{% if image.description %} — {{ image.description }}{% endif %}"
+                    aria-label="Voir {{ image.title }} en grand"
+                >
+                    <img
+                        src="{{ vich_uploader_asset(image, 'imageFile') | imagine_filter('gallery_thumb') }}"
+                        alt="{{ image.altText ?: image.title }}"
+                        class="w-full h-auto group-hover:scale-105 transition-transform duration-500"
+                        loading="lazy"
+                    >
+                    <div class="bg-white px-4 py-3 text-left">
+                        <p class="font-sans font-medium text-charcoal text-sm">{{ image.title }}</p>
+                        {% if image.description %}
+                        <p class="text-xs text-muted mt-0.5">{{ image.description }}</p>
+                        {% endif %}
+                    </div>
+                </button>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-center py-20 text-muted font-sans">
+        <p class="text-lg">Aucune réalisation dans cette catégorie pour le moment.</p>
+        {% if active_category is not null %}
+        <a href="{{ path('app_gallery') }}" class="btn-secondary mt-4">Voir toutes les réalisations</a>
+        {% endif %}
+    </div>
+    {% endif %}
+
+    {# Pagination #}
+    {% if has_prev or has_next %}
+    <div class="flex items-center justify-center gap-4 mt-12">
+        {% if has_prev %}
+        <a href="{{ path('app_gallery', {page: page - 1, categorie: active_category}) }}"
+           class="btn-secondary">
+            ← Précédentes
+        </a>
+        {% endif %}
+        <span class="text-sm text-muted font-sans">
+            {{ (page - 1) * per_page + 1 }}–{{ min(page * per_page, total) }} sur {{ total }}
+        </span>
+        {% if has_next %}
+        <a href="{{ path('app_gallery', {page: page + 1, categorie: active_category}) }}"
+           class="btn-primary">
+            10 suivantes →
+        </a>
+        {% endif %}
+    </div>
+    {% endif %}
+
+</div>
+
+<div class="bg-stone-light py-16 mt-8">
+    <div class="max-w-xl mx-auto text-center px-4">
+        <h2 class="section-title mb-3">Ce sera bientôt votre tour ?</h2>
+        <p class="section-subtitle mb-6">Parlons de votre projet — devis gratuit sous 48 h.</p>
+        <a href="{{ path('app_services') }}" class="btn-primary">Demander un devis</a>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('gallery') }}
+{% endblock %}

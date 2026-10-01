@@ -1,0 +1,371 @@
+/* ── Thème Chaleureux ─────────────────────────────────────── */
+html[data-artisan-scheme="warm"] body {
+    /* Fonds */
+    --body-bg: #FAF8F4;
+    --content-bg: #FAF8F4;
+    --content-panel-bg: #F7F4EE;
+    --fieldset-bg: #F5F1E8;
+    --responsive-header-bg: #F3EDE0;
+    --responsive-header-border-color: #DDD3BE;
+    --sidebar-bg: #F3EDE0;
+    --sidebar-border-color: #DDD3BE;
+    --modal-bg: #FAF8F4;
+    --modal-header-bg: #F3EDE0;
+    --modal-header-border-color: #DDD3BE;
+    --primary-bg: #D4C0A0;
+    --secondary-bg: #EEE8DB;
+    --tertiary-bg: #F5F1E8;
+
+    /* Textes EA */
+    --text-color: #3D2B1A;
+    --text-color-rgb: 61, 43, 26;
+    --text-color-dark: #261A0E;
+    --text-color-light: #9A7D60;
+    --text-muted: #8B7355;
+    --text-primary-color: #3D2B1A;
+    --text-secondary-color: #8B7355;
+    --text-tertiary-color: #B89870;
+    --highlight-color: #3D2B1A;
+
+    /* Textes Bootstrap (bridge explicite car défini sur :root) */
+    --bs-body-color: #3D2B1A;
+    --bs-body-color-rgb: 61, 43, 26;
+    --bs-body-bg: #FAF8F4;
+    --bs-emphasis-color: #261A0E;
+    --bs-emphasis-color-rgb: 38, 26, 14;
+    --bs-secondary-color: #8B7355;
+    --bs-tertiary-color: #B89870;
+    --bs-secondary-bg: #EEE8DB;
+    --bs-tertiary-bg: #F5F1E8;
+    --bs-heading-color: #3D2B1A;
+    --bs-border-color: #DDD3BE;
+    --bs-link-color: #9B6B3A;
+    --bs-link-hover-color: #7A5228;
+
+    /* Bordures */
+    --border-color: #DDD3BE;
+    --content-top-border-color: #DDD3BE;
+    --content-section-border-color: #DDD3BE;
+    --border-primary-color: #C4B59A;
+    --border-secondary-color: #DDD3BE;
+    --border-tertiary-color: #EEE8DB;
+
+    /* Tableaux */
+    --table-thead-color: #3D2B1A;
+    --table-cell-color: #5C4030;
+    --table-thead-marker-color: #B89870;
+    --table-thead-sorted-color: #261A0E;
+    --table-thead-sorted-marker-color: #9B6B3A;
+    --table-cell-border-color: #DDD3BE;
+    --table-hover-cell-bg: #F3EDE0;
+    --table-selected-cell-bg: #F0E4C8;
+    --bs-table-active-bg: #F0E4C8;
+    --bs-table-active-color: #5C4030;
+
+    /* Sidebar */
+    --sidebar-logo-color: #5C4A2A;
+    --sidebar-menu-color: #6B5535;
+    --sidebar-menu-header-color: #A8906A;
+    --sidebar-menu-icon-color: #A8906A;
+    --sidebar-menu-active-item-bg: #E8DCC8;
+    --sidebar-menu-active-item-color: #8B5E2A;
+    --sidebar-menu-badge-bg: #F0E4C8;
+    --sidebar-menu-badge-color: #8B5E2A;
+    --sidebar-menu-submenu-color: #7A6040;
+
+    /* Couleur principale */
+    --color-primary: #9B6B3A;
+    --link-color: #9B6B3A;
+    --link-hover-color: #7A5228;
+    --resize-handler-hover-bg: #9B6B3A;
+
+    /* Dropdowns */
+    --dropdown-toggle-bg: #FAF8F4;
+    --dropdown-toggle-color: #6B5535;
+    --dropdown-toggle-border-color: #DDD3BE;
+    --dropdown-bg: #FAF8F4;
+    --dropdown-color: #6B5535;
+    --dropdown-border-color: #DDD3BE;
+    --dropdown-link-color: #3D2B1A;
+    --dropdown-link-hover-bg: #EEE8DB;
+    --dropdown-icon-color: #8B7355;
+    --dropdown-settings-active-item-bg: #F0E4C8;
+    --dropdown-settings-active-item-color: #8B5E2A;
+    --dropdown-settings-active-item-shadow: inset 0 0 0 1px rgba(155, 107, 58, 0.5);
+    --dropdown-settings-icon-color: #B89868;
+
+    /* Formulaires */
+    --form-label-color: #3D2B1A;
+    --form-control-bg: #FFFDFB;
+    --form-input-text-color: #3D2B1A;
+    --form-input-border-color: #CCBFA6;
+
+    /* Boutons primary (Enregistrer, Nouveau…) */
+    --button-primary-bg: linear-gradient(to bottom, #BA8248, #A87038);
+    --button-primary-color: #fff;
+    --button-primary-icon-color: rgba(255,255,255,0.85);
+    --button-primary-border-color: rgba(0,0,0,0.15);
+    --button-primary-hover-bg: linear-gradient(to bottom, #A87038, #966030);
+    --button-primary-hover-color: #fff;
+    --button-primary-hover-border-color: rgba(0,0,0,0.15);
+    --button-primary-active-bg: linear-gradient(to bottom, #966030, #845428);
+    --button-primary-active-color: #fff;
+    --button-primary-active-border-color: rgba(0,0,0,0.15);
+
+    /* Boutons secondary (Filtres, actions) */
+    --button-secondary-bg: linear-gradient(to bottom, #EDE3D4, #E4D8C4);
+    --button-secondary-color: #3D2B1A;
+    --button-secondary-icon-color: #6B5535;
+    --button-secondary-border-color: #C4B59A;
+    --button-secondary-hover-bg: linear-gradient(to bottom, #E4D8C4, #D9CBB4);
+    --button-secondary-hover-color: #261A0E;
+    --button-secondary-hover-border-color: #B8A488;
+    --button-secondary-active-bg: linear-gradient(to bottom, #D9CBB4, #CCBDA4);
+    --button-secondary-active-color: #261A0E;
+    --button-secondary-active-border-color: #B8A488;
+
+    /* Boutons success (fond repos = beige, hover = vert) */
+    --button-success-bg: linear-gradient(to bottom, #EDE3D4, #E4D8C4);
+    --button-success-color: #1a6e30;
+    --button-success-icon-color: #1a6e30;
+    --button-success-border-color: #C4B59A;
+    --button-success-hover-bg: #1f883d;
+    --button-success-hover-color: #fff;
+    --button-success-hover-border-color: rgba(0,0,0,0.15);
+    --button-success-active-bg: #197935;
+    --button-success-active-color: #fff;
+    --button-success-active-border-color: rgba(0,0,0,0.15);
+
+    /* Boutons warning (fond repos = beige, hover = ambre) */
+    --button-warning-bg: linear-gradient(to bottom, #EDE3D4, #E4D8C4);
+    --button-warning-color: #8a5f00;
+    --button-warning-icon-color: #8a5f00;
+    --button-warning-border-color: #C4B59A;
+    --button-warning-hover-bg: #b88700;
+    --button-warning-hover-color: #fff;
+    --button-warning-hover-border-color: rgba(0,0,0,0.15);
+    --button-warning-active-bg: #a67a00;
+    --button-warning-active-color: #fff;
+    --button-warning-active-border-color: rgba(0,0,0,0.15);
+
+    /* Boutons danger (fond repos = beige, hover = rouge) */
+    --button-danger-bg: linear-gradient(to bottom, #EDE3D4, #E4D8C4);
+    --button-danger-color: #c0202b;
+    --button-danger-icon-color: #c0202b;
+    --button-danger-border-color: #C4B59A;
+    --button-danger-hover-bg: #cf222e;
+    --button-danger-hover-color: #fff;
+    --button-danger-hover-border-color: rgba(0,0,0,0.15);
+    --button-danger-active-bg: #a40e26;
+    --button-danger-active-color: #fff;
+    --button-danger-active-border-color: rgba(0,0,0,0.15);
+
+    /* Boutons / badges */
+    --form-switch-checked-bg: #B87E46;
+    --form-type-check-input-checked-bg: #B87E46;
+    --badge-boolean-true-bg: #9B6B3A;
+    --badge-primary-bg: #F0E4C8;
+    --button-focus-outline-color: #B87E46;
+    --pagination-active-bg: #9B6B3A;
+
+    /* Alertes */
+    --alert-primary-bg: #F5EBD5;
+    --alert-primary-color: #6B4520;
+    --alert-primary-border-color: #DFD0B0;
+
+    /* Divers */
+    --content-search-input-bg: #FAF8F4;
+    --user-avatar-icon-bg: #E8DCC8;
+    --user-avatar-icon-color: #8B7355;
+    --user-name-color: #8B7355;
+    --datagrid-noresults-placeholder-bg: #F0E8D8;
+    --popover-bg: #F3EDE0;
+    --popover-border-color: #DDD3BE;
+    --popover-color: #3D2B1A;
+}
+
+/* ── Thème Gris doux ──────────────────────────────────────── */
+html[data-artisan-scheme="soft"] body {
+    /* Fonds */
+    --body-bg: #F5F7FA;
+    --content-bg: #F5F7FA;
+    --content-panel-bg: #EEF2F8;
+    --fieldset-bg: #E8EDF5;
+    --responsive-header-bg: #EBF0F7;
+    --responsive-header-border-color: #CDD8E8;
+    --sidebar-bg: #EBF0F7;
+    --sidebar-border-color: #CDD8E8;
+    --modal-bg: #F5F7FA;
+    --modal-header-bg: #EBF0F7;
+    --modal-header-border-color: #CDD8E8;
+    --primary-bg: #A8C0D8;
+    --secondary-bg: #DDE8F3;
+    --tertiary-bg: #E8EDF5;
+
+    /* Textes EA */
+    --text-color: #1E2E45;
+    --text-color-rgb: 30, 46, 69;
+    --text-color-dark: #111E2E;
+    --text-color-light: #7A90AA;
+    --text-muted: #6B80A0;
+    --text-primary-color: #1E2E45;
+    --text-secondary-color: #6B80A0;
+    --text-tertiary-color: #8FA8C8;
+    --highlight-color: #1E2E45;
+
+    /* Textes Bootstrap (bridge explicite car défini sur :root) */
+    --bs-body-color: #1E2E45;
+    --bs-body-color-rgb: 30, 46, 69;
+    --bs-body-bg: #F5F7FA;
+    --bs-emphasis-color: #111E2E;
+    --bs-emphasis-color-rgb: 17, 30, 46;
+    --bs-secondary-color: #6B80A0;
+    --bs-tertiary-color: #8FA8C8;
+    --bs-secondary-bg: #DDE8F3;
+    --bs-tertiary-bg: #E8EDF5;
+    --bs-heading-color: #1E2E45;
+    --bs-border-color: #CDD8E8;
+    --bs-link-color: #3B7DD8;
+    --bs-link-hover-color: #2563A8;
+
+    /* Bordures */
+    --border-color: #CDD8E8;
+    --content-top-border-color: #CDD8E8;
+    --content-section-border-color: #CDD8E8;
+    --border-primary-color: #A8C0D8;
+    --border-secondary-color: #CDD8E8;
+    --border-tertiary-color: #DDE8F3;
+
+    /* Tableaux */
+    --table-thead-color: #1E2E45;
+    --table-cell-color: #2D4460;
+    --table-thead-marker-color: #8FA8C8;
+    --table-thead-sorted-color: #111E2E;
+    --table-thead-sorted-marker-color: #3B7DD8;
+    --table-cell-border-color: #CDD8E8;
+    --table-hover-cell-bg: #EBF0F7;
+    --table-selected-cell-bg: #D8E5F5;
+    --bs-table-active-bg: #D8E5F5;
+    --bs-table-active-color: #2D4460;
+
+    /* Sidebar */
+    --sidebar-logo-color: #2C4A6E;
+    --sidebar-menu-color: #3A5577;
+    --sidebar-menu-header-color: #7A96BB;
+    --sidebar-menu-icon-color: #7A96BB;
+    --sidebar-menu-active-item-bg: #D8E5F5;
+    --sidebar-menu-active-item-color: #2563A8;
+    --sidebar-menu-badge-bg: #D8E5F5;
+    --sidebar-menu-badge-color: #2563A8;
+    --sidebar-menu-submenu-color: #4A6A90;
+
+    /* Couleur principale */
+    --color-primary: #3B7DD8;
+    --link-color: #3B7DD8;
+    --link-hover-color: #2563A8;
+    --resize-handler-hover-bg: #3B7DD8;
+
+    /* Dropdowns */
+    --dropdown-toggle-bg: #F5F7FA;
+    --dropdown-toggle-color: #3A5577;
+    --dropdown-toggle-border-color: #CDD8E8;
+    --dropdown-bg: #F5F7FA;
+    --dropdown-color: #3A5577;
+    --dropdown-border-color: #CDD8E8;
+    --dropdown-link-color: #1E2E45;
+    --dropdown-link-hover-bg: #DDE8F5;
+    --dropdown-icon-color: #6B80A0;
+    --dropdown-settings-active-item-bg: #D8E5F5;
+    --dropdown-settings-active-item-color: #2563A8;
+    --dropdown-settings-active-item-shadow: inset 0 0 0 1px rgba(59, 125, 216, 0.5);
+    --dropdown-settings-icon-color: #7A96BB;
+
+    /* Formulaires */
+    --form-label-color: #1E2E45;
+    --form-control-bg: #FAFCFF;
+    --form-input-text-color: #1E2E45;
+    --form-input-border-color: #B0C4DC;
+
+    /* Boutons primary (Enregistrer, Nouveau…) */
+    --button-primary-bg: linear-gradient(to bottom, #4A8FE0, #3B7DD8);
+    --button-primary-color: #fff;
+    --button-primary-icon-color: rgba(255,255,255,0.85);
+    --button-primary-border-color: rgba(0,0,0,0.12);
+    --button-primary-hover-bg: linear-gradient(to bottom, #3B7DD8, #2E6EC5);
+    --button-primary-hover-color: #fff;
+    --button-primary-hover-border-color: rgba(0,0,0,0.12);
+    --button-primary-active-bg: linear-gradient(to bottom, #2E6EC5, #2563A8);
+    --button-primary-active-color: #fff;
+    --button-primary-active-border-color: rgba(0,0,0,0.12);
+
+    /* Boutons secondary (Filtres, actions) */
+    --button-secondary-bg: linear-gradient(to bottom, #DDE8F5, #D0DFEF);
+    --button-secondary-color: #1E2E45;
+    --button-secondary-icon-color: #3A5577;
+    --button-secondary-border-color: #A8C0D8;
+    --button-secondary-hover-bg: linear-gradient(to bottom, #D0DFEF, #C3D5E8);
+    --button-secondary-hover-color: #111E2E;
+    --button-secondary-hover-border-color: #90B0CC;
+    --button-secondary-active-bg: linear-gradient(to bottom, #C3D5E8, #B5C8DF);
+    --button-secondary-active-color: #111E2E;
+    --button-secondary-active-border-color: #90B0CC;
+
+    /* Boutons success (fond repos = bleu-gris, hover = vert) */
+    --button-success-bg: linear-gradient(to bottom, #DDE8F5, #D0DFEF);
+    --button-success-color: #156830;
+    --button-success-icon-color: #156830;
+    --button-success-border-color: #A8C0D8;
+    --button-success-hover-bg: #1f883d;
+    --button-success-hover-color: #fff;
+    --button-success-hover-border-color: rgba(0,0,0,0.12);
+    --button-success-active-bg: #197935;
+    --button-success-active-color: #fff;
+    --button-success-active-border-color: rgba(0,0,0,0.12);
+
+    /* Boutons warning (fond repos = bleu-gris, hover = ambre) */
+    --button-warning-bg: linear-gradient(to bottom, #DDE8F5, #D0DFEF);
+    --button-warning-color: #7a5500;
+    --button-warning-icon-color: #7a5500;
+    --button-warning-border-color: #A8C0D8;
+    --button-warning-hover-bg: #b88700;
+    --button-warning-hover-color: #fff;
+    --button-warning-hover-border-color: rgba(0,0,0,0.12);
+    --button-warning-active-bg: #a67a00;
+    --button-warning-active-color: #fff;
+    --button-warning-active-border-color: rgba(0,0,0,0.12);
+
+    /* Boutons danger (fond repos = bleu-gris, hover = rouge) */
+    --button-danger-bg: linear-gradient(to bottom, #DDE8F5, #D0DFEF);
+    --button-danger-color: #b81c27;
+    --button-danger-icon-color: #b81c27;
+    --button-danger-border-color: #A8C0D8;
+    --button-danger-hover-bg: #cf222e;
+    --button-danger-hover-color: #fff;
+    --button-danger-hover-border-color: rgba(0,0,0,0.12);
+    --button-danger-active-bg: #a40e26;
+    --button-danger-active-color: #fff;
+    --button-danger-active-border-color: rgba(0,0,0,0.12);
+
+    /* Boutons / badges */
+    --form-switch-checked-bg: #4A90D9;
+    --form-type-check-input-checked-bg: #4A90D9;
+    --badge-boolean-true-bg: #3B7DD8;
+    --badge-primary-bg: #D8E5F5;
+    --button-focus-outline-color: #4A90D9;
+    --pagination-active-bg: #3B7DD8;
+
+    /* Alertes */
+    --alert-primary-bg: #E0ECFA;
+    --alert-primary-color: #1A4A80;
+    --alert-primary-border-color: #B8D0EE;
+
+    /* Divers */
+    --content-search-input-bg: #F5F7FA;
+    --user-avatar-icon-bg: #D8E5F5;
+    --user-avatar-icon-color: #6B80A0;
+    --user-name-color: #6B80A0;
+    --datagrid-noresults-placeholder-bg: #E5EDF8;
+    --popover-bg: #EBF0F7;
+    --popover-border-color: #CDD8E8;
+    --popover-color: #1E2E45;
+}
